@@ -30,12 +30,18 @@ main.append(h3)
 
 
 function verifyRobo(e) {
+
     let clickedImage = e.target;
 
-    if (clickedImage.classList.contains("selected")) return;
+    if (clickedImage.getAttribute("data-status") == "clicked") {
+        return;
+    }
 
-    clickedImage.classList.add("selected");
-    clickedImage.setAttribute("data-status", "clicked");
+    clickedImage.setAttribute("data-status", "clicked"); // to check how many image is selected
+
+    clickedImage.classList.add("selected");  // for applying styling 
+
+
 
     if (!document.getElementById("reset")) {
         let btn = document.createElement("button")
@@ -45,9 +51,7 @@ function verifyRobo(e) {
         main.append(btn)
     }
 
-    let selected = document.querySelectorAll(".selected");
-
-    if (selected.length === 2 && !document.getElementById("verify")) {
+    if (document.querySelectorAll(".selected").length === 2) {
         let btn = document.createElement("button")
         btn.innerText = "Verify"
         btn.id = "verify";
@@ -55,8 +59,9 @@ function verifyRobo(e) {
         main.append(btn)
     }
 
-    if (selected.length > 2 && document.getElementById("verify")) {
-        document.getElementById("verify").remove();
+    if (document.querySelectorAll(".selected").length > 2) {
+        let btn = document.getElementById("verify")
+        btn.remove()
     }
 }
 
@@ -65,15 +70,33 @@ function reset() {
     let selectedImage = document.querySelectorAll(".selected")
     for (let t of selectedImage) {
         t.classList.remove("selected")
-        t.removeAttribute("data-status")
+        t.setAttribute("data-status", "")
     }
 
     let resetBtn = document.getElementById("reset")
-    if (resetBtn) resetBtn.remove()
+    resetBtn.remove()
 
     let verifyBtn = document.getElementById("verify")
-    if (verifyBtn) verifyBtn.remove()
-
+    if (verifyBtn) {
+        verifyBtn.remove()
+    }
     let para = document.getElementById("para")
-    if (para) para.remove()
+    if (para) {
+        para.remove()
+    }
+}
+
+
+function verify(e) {
+    let para = document.createElement("p")
+    para.id = "para"
+    let selectedImage = document.querySelectorAll(".selected")
+    if (selectedImage[0].classList[0] == selectedImage[1].classList[0]) {
+        para.innerText = "You are a human. Congratulations!"
+    }
+    else {
+        para.innerText = "We can't verify you as a human. You selected the non-identical tiles."
+    }
+    main.append(para)
+    e.target.remove()
 }
