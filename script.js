@@ -28,7 +28,7 @@ h3.innerText = "Please click on the identical tiles to verify that you are not a
 h3.id = "h";
 main.append(h3)
 
-if (!document.getElementById("reset")) {
+
     function verifyRobo(e) {
 
         let clickedImage = e.target;
@@ -43,12 +43,13 @@ if (!document.getElementById("reset")) {
 
 
 
-
+        if (!document.getElementById("reset")) {
         let btn = document.createElement("button")
         btn.innerText = "Reset"
         btn.id = "reset";
         btn.addEventListener("click", reset)
         main.append(btn)
+        }
 
         if(document.querySelectorAll(".selected").length == 2){
             let btn = document.createElement("button")
@@ -64,7 +65,6 @@ if (!document.getElementById("reset")) {
         }
     }
 
-}
 
 function reset(){
     let selectedImage = document.querySelectorAll(".selected")
@@ -76,7 +76,7 @@ function reset(){
     let resetBtn = document.getElementById("reset")
     resetBtn.remove()
 
-    let verifyBtn = document.getElementById("verufy")
+    let verifyBtn = document.getElementById("verify")
     if(verifyBtn){
         verifyBtn.remove()
     }
@@ -87,10 +87,9 @@ function reset(){
 }
 
 
-function verify(){
+function verify(e){
     let para = document.createElement("p")
     para.id = "para"
-    let verifyBtn = document.getElementById("verify")
     let selectedImage = document.querySelectorAll(".selected")
     if(selectedImage[0].classList[0] == selectedImage[1].classList[0]){
         para.innerText = "You are a human. Congratulations!"
@@ -99,5 +98,5 @@ function verify(){
         para.innerText = "We can't verify you as a human. You selected the non-identical tiles."
     }
     main.append(para)
-    verifyBtn.style.display = "none"
+    e.target.remove()
 }
