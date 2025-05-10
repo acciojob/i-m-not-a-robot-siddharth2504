@@ -1,27 +1,33 @@
 //your JS code here. If required.
 
-let main = document.querySelector("main")
+let main = document.querySelector("main");
 
-let classNameArray = ["img1", "img2", "img3", "img4", "img5"]
+let classNameArray = ["img1", "img2", "img3", "img4", "img5"];
 
+// Always duplicate one of them, ensuring at least one duplicate pair
 let randomIndex = Math.floor(Math.random() * classNameArray.length);
+let duplicate = classNameArray[randomIndex];
 
-classNameArray.push(classNameArray[randomIndex]);
+// Create new array with 6 total (one duplicate)
+let finalArray = [...classNameArray, duplicate];
 
-classNameArray.sort(() => Math.random() - 0.5)
+// Shuffle the array
+finalArray.sort(() => Math.random() - 0.5);
 
 let h1 = document.createElement("h1");
-h1.innerText = "I'm not a robot"
+h1.innerText = "I'm not a robot";
 main.append(h1);
 
-for (let t of classNameArray) {
-    let img = document.createElement("img")
+// Now create images
+for (let t of finalArray) {
+    let img = document.createElement("img");
     img.classList.add(t);
-	img.setAttribute("data-ns-test", t);
-    main.append(img)
+    img.setAttribute("data-ns-test", t); // required by Cypress test
+    main.append(img);
 
-    img.addEventListener("click", verifyRobo)
+    img.addEventListener("click", verifyRobo);
 }
+
 
 
 let h3 = document.createElement("h3")
