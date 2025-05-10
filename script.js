@@ -17,6 +17,7 @@ main.append(h1);
 for (let t of classNameArray) {
     let img = document.createElement("img")
     img.classList.add(t);
+	img.setAttribute("data-ns-test", t);
     main.append(img)
 
     img.addEventListener("click", verifyRobo)
